@@ -1,6 +1,6 @@
 package aips.search;
 
-import java.util.*;
+import java.util.*;//hello
 
 /**
  * This interface defines the methods required on a problem state.
