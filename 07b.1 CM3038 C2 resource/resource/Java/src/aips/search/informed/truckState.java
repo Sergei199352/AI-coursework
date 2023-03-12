@@ -27,7 +27,7 @@ public truckState(double [][] cargo, double f_AB, double f_BC, double f_AC,doubl
     this.vcost_BC = v_BC;
     this.vcost_CA = v_AC;
     this.truckLocation = truckL;
-    city_cargo = new double [3] [3] ;
+    city_cargo = new double [3] [] ;
     for (int row = 0; row<city_cargo.length; row++){
         for (int col = 0; col < city_cargo[1].length; col++)
         {
@@ -61,12 +61,31 @@ public String toString(){
 
 
 
+
+
+
     
 
     
     
     
     return result;
+}
+
+public truckState applyAction(truckAct action){
+
+    truckState nexState = new truckState(this.city_cargo, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.truckLocation);
+    nexState.city_cargo[action.to_city][0] = action.cargo_am; 
+    nexState.city_cargo[action.from_cityR][action.from_cityC] = 0;
+    
+    
+    
+    return nexState;
+   
+
+
+
+
 }
 
 public boolean equals (Object state){
