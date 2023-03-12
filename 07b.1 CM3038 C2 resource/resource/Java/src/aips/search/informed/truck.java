@@ -1,6 +1,6 @@
 package aips.search.informed;
 
 public enum truck {
-    CITYA, CITYB, CITYC;
+    CITYAB, CITYBC, CITYCA, CITYAC
     
 }//end enum
