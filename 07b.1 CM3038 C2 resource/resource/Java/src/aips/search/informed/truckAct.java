@@ -41,22 +41,37 @@ public class truckAct extends Action {
     public String toString() {
         String result = "";
 
+// i am using the if statement to check which row the cargo is being moved to
+        if (this.to_city == 0){  // each row corresponds to a city
+        
+            result += "The truck moves from to the city A with cargo "+ this.cargo_am  + "\n";
+            result += "Truck at City A"; 
+        }// as a result once the truck moved to a vertain city then its location is at that city
+        if (this.to_city == 1){
+            result += "The truck moves to the city B with cargo " + this.cargo_am +"\n";
+            result += "Truck at City B";
+        }
+        if (this.to_city == 2){
+            result += "The truck moves to the city C with cargo " + this.cargo_am +"\n" ;
+            result += "Truck at City C";
+        }
 
-        switch(truck_loc){
 
-            case CITYAB: result += "Moving cargo between A and B";
-                         result += "the cargo amount is "+ this.cargo_am;
+        // switch(truck_loc){
+
+        //     case CITYAB: result += "Moving cargo between A and B";
+        //                  result += "the cargo amount is "+ this.cargo_am;
 
 
-            case CITYBC:result += "Moving cargo between B and C";
-                        result += "the cargo amount is "+ this.cargo_am;
+        //     case CITYBC:result += "Moving cargo between B and C";
+        //                 result += "the cargo amount is "+ this.cargo_am;
 
-            case CITYCA:result += "Moving cargo between C and A";
-                        result += "the cargo amount is "+ this.cargo_am;
+        //     case CITYCA:result += "Moving cargo between C and A";
+        //                 result += "the cargo amount is "+ this.cargo_am;
 
-            case CITYAC:result += "Moving cargo between A and C";
-                        result += "the cargo amount is "+ this.cargo_am;
-                    }
+        //     case CITYAC:result += "Moving cargo between A and C";
+        //                 result += "the cargo amount is "+ this.cargo_am;
+        //             }
 
 
 

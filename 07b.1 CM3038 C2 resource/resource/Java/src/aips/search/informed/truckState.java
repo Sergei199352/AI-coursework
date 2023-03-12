@@ -1,5 +1,8 @@
 package aips.search.informed;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aips.search.ActionStatePair;
@@ -27,9 +30,9 @@ public truckState(double [][] cargo, double f_AB, double f_BC, double f_AC,doubl
     this.vcost_BC = v_BC;
     this.vcost_CA = v_AC;
     this.truckLocation = truckL;
-    city_cargo = new double [3] [] ;
-    for (int row = 0; row<city_cargo.length; row++){
-        for (int col = 0; col < city_cargo[1].length; col++)
+    city_cargo = new double [3] [6] ;
+    for (int row = 0; row<this.city_cargo.length; row++){
+        for (int col = 0; col < this.city_cargo[0].length -1; col++)
         {
             this.city_cargo[row][col] = cargo[row][col];
 
@@ -39,9 +42,9 @@ public truckState(double [][] cargo, double f_AB, double f_BC, double f_AC,doubl
 public String toString(){
     String result = "";
 
-    for (int row = 0; row<city_cargo.length ; row++){
+    for (int row = 0; row<this.city_cargo.length ; row++){
         result += "The cargo in a city " + cities[row];
-        for (int col = 0; col<city_cargo[0].length ; col++){
+        for (int col = 0; col<this.city_cargo[0].length -1; col++){
 
             result +=  " " + this.city_cargo[row][col];
             
@@ -50,6 +53,7 @@ public String toString(){
 
         }
         result += "\n";
+        
     
     
     
@@ -75,8 +79,30 @@ public String toString(){
 public truckState applyAction(truckAct action){
 
     truckState nexState = new truckState(this.city_cargo, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.fcost_AB, this.truckLocation);
-    nexState.city_cargo[action.to_city][0] = action.cargo_am; 
-    nexState.city_cargo[action.from_cityR][action.from_cityC] = 0;
+    
+        
+        for (int col = 0; col<3 ; col++){
+
+            if (nexState.city_cargo[action.to_city][col] == 0){
+                nexState.city_cargo[action.to_city][col] = action.cargo_am;
+                
+                
+            }
+            
+            // System.out.println(action.from_cityC);
+             System.out.println(action.from_cityR);
+            
+            
+
+
+        };
+        nexState.city_cargo[action.from_cityR][action.from_cityC] = 0;
+        double [ ] n = nexState.city_cargo[action.from_cityR];
+        System.out.println(Arrays.toString(n));
+        
+       
+    
+    
     
     
     
@@ -112,8 +138,115 @@ public boolean equals (Object state){
 
 @Override
     public List<ActionStatePair> successor() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'successor'");
+        List<ActionStatePair> result = new ArrayList<ActionStatePair>();
+        if (this.truckLocation == truck.CITYA){
+
+            Double cargo; //cargo amount 
+            int row= 0; // thirst row city A
+
+            int col = 0; // returns the first element oif the array
+
+            int torow = row +1; // next row in line
+            
+
+           if (this.city_cargo[row][col] == 0){ // checks if the cargo amount is zero
+            col +=1; // if it is then 
+            cargo = this.city_cargo[row][col];
+
+           }else{
+            cargo = this.city_cargo[row][col];
+           }
+        
+
+
+           truckAct action = new truckAct(cargo, row, col, torow, truckLocation);
+           truckState nexState = this.applyAction(action);
+           ActionStatePair actionStatePair = new ActionStatePair(action, nexState);
+           result.add(actionStatePair);
+           
+
+                
+                    
+        }
+        if (this.truckLocation == truck.CITYB){
+
+            Double cargo;
+
+
+            int row= 1; 
+
+            int col = 0;
+
+            int torow = row +1;
+            
+
+           if (this.city_cargo[row][col] == 0){
+            col +=1;
+            cargo = this.city_cargo[row][col];
+
+           }else{
+            cargo = this.city_cargo[row][col];
+           }
+        
+
+
+           truckAct action = new truckAct(cargo, row, col, torow, truckLocation);
+           truckState nexState = this.applyAction(action);
+           ActionStatePair actionStatePair = new ActionStatePair(action, nexState);
+           result.add(actionStatePair);
+
+                
+                    
+        }
+        if (this.truckLocation == truck.CITYC){
+
+            Double cargo;
+
+
+            int row= 2; 
+
+            int col = 0;
+
+            int torow = 0;
+            
+
+           if (this.city_cargo[row][col] == 0){
+            col +=1;
+            cargo = this.city_cargo[row][col];
+
+           }else{
+            cargo = this.city_cargo[row][col];
+           }
+        
+
+
+           truckAct action = new truckAct(cargo, row, col, torow, truckLocation);
+           truckState nexState = this.applyAction(action);
+           ActionStatePair actionStatePair = new ActionStatePair(action, nexState);
+           result.add(actionStatePair);
+
+                
+                    
+        }
+
+        
+
+        
+        
+        
+        
+        
+        
+        
+       
+        
+        return result;
+        
+
+
+
+
     }
+    
     
 }
